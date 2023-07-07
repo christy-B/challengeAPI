@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  challenge:
+    build: 
+      context: ./
+      dockerfile: ./docker/Dockerfile.dev
+    command: /bin/bash -c "while sleep 1000; do :; done"
+    working_dir: /home/dev
+    networks:
+      - challenge-network
+    volumes:
+      - ./:/home/dev:cached
+
+  dbms:
+    image: mariadb
+    restart: always
+    ports:
+      - "3309:3306"
+    env_file: .env
+    command: [
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci",
+    ]
+    volumes:
+      - ./dbms/dbms-data:/var/lib/mysql
+      - ./dbms/mariadb.cnf:/etc/mysql/mariadb.cnf
+    networks:
+      - challenge-network
+      
+networks:
+  challenge-network:
+    driver: bridge
+    name: challenge-network
