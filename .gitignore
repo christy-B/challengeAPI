@@ -1,0 +1,16 @@
+# Ignored directories
+node_modules/
+dist/
+logs/
+.vscode/
+.idea/
+dbms/dbms-data/
+dbms/ddl/
+
+# Ignored files
+.env
+.env.*
+*.log
+*.pid
+*~
+*.swp

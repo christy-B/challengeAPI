@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  vscode_api:
+    build: 
+      context: ./
+      dockerfile: ./docker/Dockerfile.dev
+    command: /bin/bash -c "while sleep 1000; do :; done"
+    working_dir: /home/dev
+    networks:
+      - api-network
+    volumes:
+      - ./:/home/dev:cached
+
+  dbms:
+    image: mariadb
+    restart: always
+    ports:
+      - "3309:3306"
+    environment: 
+      - MYSQL_ALLOW_EMPTY_PASSWORD=false
+      - MYSQL_ROOT_PASSWORD=rootpassword
+    command: [
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci",
+    ]
+    volumes:
+      - ./dbms/dbms-data:/var/lib/mysql
+      - ./dbms/mariadb.cnf:/etc/mysql/mariadb.cnf
+    networks:
+      - api-network
+      
+networks:
+  api-network:
+    driver: bridge
+    name: api-network
