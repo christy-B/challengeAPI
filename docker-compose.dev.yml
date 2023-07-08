@@ -7,27 +7,31 @@ services:
       dockerfile: ./docker/Dockerfile.dev
     command: /bin/bash -c "while sleep 1000; do :; done"
     working_dir: /home/dev
+    env_file: 
+      - .env
     networks:
       - challenge-network
     volumes:
       - ./:/home/dev:cached
-
+      
   dbms:
-    image: mariadb
+    build:
+      context: ./
+      dockerfile: ./dbms/Dockerfile.db
     restart: always
+    env_file: 
+      - .env
     ports:
       - "3309:3306"
-    env_file: .env
     command: [
       "--character-set-server=utf8mb4",
       "--collation-server=utf8mb4_unicode_ci",
     ]
     volumes:
-      - ./dbms/dbms-data:/var/lib/mysql
       - ./dbms/mariadb.cnf:/etc/mysql/mariadb.cnf
     networks:
       - challenge-network
-      
+
 networks:
   challenge-network:
     driver: bridge

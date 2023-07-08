@@ -1,0 +1,3 @@
+FROM mariadb
+
+COPY /dbms/database.sql /docker-entrypoint-initdb.d/
