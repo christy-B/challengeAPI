@@ -37,18 +37,22 @@ export class SshClient {
 
     connect(settings: ConnectConfig, instructions: Callback) {
         return new Promise<void>((resolve, reject) => {
-            this.conn.on("ready", () => {
-                instructions()
-                    .then(() => {
-                        resolve();
-                    })
-                    .catch((err:stdOutError) => {
-                        reject(err);
-                    })
-                    .finally(() => {
-                        this.conn.end();
-                    })
-            }).connect(settings);
+            this.conn
+                .on("error", (err:Error)=> {
+                    reject(err.message);
+                })
+                .on("ready", () => {
+                    instructions()
+                .then(() => {
+                    resolve();
+                })
+                .catch((err:stdOutError) => {
+                    reject(err);
+                })
+                .finally(() => {
+                    this.conn.end();
+                })
+            }).connect(settings)
         })
     }
 

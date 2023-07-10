@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ssh": "ts-node src/ssh/connection.ts"
+    "ssh": "ts-node src/ssh/connection.ts",
+    "server": "ts-node src/server.ts"
   },
   "author": "",
   "license": "ISC",
