@@ -21,15 +21,4 @@ ENV SHELL /bin/bash
 # Le repertoire maison par défaut
 WORKDIR /home/dev
 
-# RUN mkdir /docker-entrypoint-initdb.d/
-
 RUN /bin/bash
-
-# Using CMD to source environment variables and execute the SQL script on container startup
-
-# CMD /bin/bash -c "exec -i mycli -h dbms -u root -p"$MYSQL_ROOT_PASSWORD" source /home/dev/database.sql && /bin/bash"
-
-#CMD /bin/bash -c "exec -i mycli -h dbms -u root -p "$MYSQL_ROOT_PASSWORD" -e 'create database challenge'"
-                # && challenge < /home/dev/database.sql \
-                # && /bin/bash"
-# mycli -h dbms -u root -p rootpassword

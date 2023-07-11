@@ -1,3 +1,4 @@
 FROM mariadb
 
+#File to executes for db creation when building the db container
 COPY /dbms/database.sql /docker-entrypoint-initdb.d/
