@@ -7,7 +7,7 @@ export interface IUser {
   nom_user?: string;
   prenom_user?: string;
   email_user: string;
-  scope: string;
+  scope: 'user'|'admin';
   promo_user: string;
 
 }
