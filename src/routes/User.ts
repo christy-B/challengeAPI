@@ -165,4 +165,10 @@ const routerUser = Router({ mergeParams: true });
 routerUser.use(routerIndex);
 routerUser.use('/:id_user', routerSingle);
 
-export const ROUTES_USER = routerUser;
+export const ROUTES_USER_ADMIN = routerUser;
+
+const routerForUser = Router({ mergeParams: true });
+routerUser.use(routerIndex);
+routerUser.use('/:id_user', routerSingle);
+
+export const ROUTES_USER = routerForUser;

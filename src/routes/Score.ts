@@ -1,16 +1,70 @@
 import { NextFunction, Router } from "express";
 import { OkPacket, RowDataPacket } from 'mysql2';
 import { ICreateResponse } from '../types/ICreateResponse';
-import { IIndexQuery, IIndexResponse, ITableCount } from '../types/IIndexQuery';
-import { IUpdateResponse } from "../types/IUpdateResponse";
 import { DB } from '../utility/DB';
 import { IScore, IScoreRO } from "../model/IScore";
+import { IIndexQuery, IIndexResponse, ITableCount } from '../types/IIndexQuery';
 import { ISessionRO } from "../model/ISession";
+import { IUpdateResponse } from "../types/IUpdateResponse";
 
 
-/// Pour tous les endpoints /
-/// GET /
-/// POST /
+const routerScoreSingle = Router({ mergeParams: true });
+
+routerScoreSingle.get<{ user_foreign_key: string , session_foreign_key: string}, IScoreRO, {}>('',
+  async (request, response, next: NextFunction) => {
+
+    try {
+      const userId = request.params.user_foreign_key;
+      const sessionId = request.params.session_foreign_key;
+
+      // ATTENTION ! Valider que le userId est valable ?
+
+      const db = DB.Connection;
+
+      // Récupérer les lignes
+      const data = await db.query<IScore[] & RowDataPacket[]>("select id_score, score, user_foreign_key, session_foreign_key from SCORE where user_foreign_key = ? and session_foreign_key = ?", [userId, sessionId]);
+
+      // Construire la réponse
+
+      // ATTENTION ! Que faire si le nombre de lignes est zéro ?
+
+      const res = data[0][0];
+
+      response.json(res);
+
+    } catch (err: any) {
+      next(err);
+    }
+
+  }
+);
+
+
+routerScoreSingle.post<{}, ICreateResponse, IScore>('',
+  async (request, response, next: NextFunction) => {
+
+    try {
+      const score = request.body.score;
+      const user_foreign_key = request.body.user_foreign_key
+      const session_foreign_key = request.body.session_foreign_key
+
+      // ATTENTION ! Et si les données dans user ne sont pas valables ?
+      // - colonnes qui n'existent pas ?
+      // - données pas en bon format ?
+
+      const db = DB.Connection;
+      const data = await db.query<OkPacket>("insert into SCORE set ?", [score, user_foreign_key, session_foreign_key]);
+
+      response.json({
+        id: data[0].insertId
+      });
+
+    } catch (err: any) {
+      next(err);
+    }
+
+  }
+);
 
 const routerScore = Router({ mergeParams: true });
 
@@ -50,67 +104,9 @@ routerScore.get<{}, IIndexResponse<ISessionRO>, {}, IIndexQuery>('/',
   }
 );
 
-const routerSingle = Router({ mergeParams: true });
+const routerScoreTest = Router({ mergeParams: true });
 
-routerSingle.get<{ user_foreign_key: string , session_foreign_key: string}, IScoreRO, {}>('',
-  async (request, response, next: NextFunction) => {
-
-    try {
-      const userId = request.params.user_foreign_key;
-      const sessionId = request.params.session_foreign_key;
-
-      // ATTENTION ! Valider que le userId est valable ?
-
-      const db = DB.Connection;
-
-      // Récupérer les lignes
-      const data = await db.query<IScore[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, id_promo from USER where id_user = ?", [userId]);
-
-      // Construire la réponse
-
-      // ATTENTION ! Que faire si le nombre de lignes est zéro ?
-
-      const res = data[0][0];
-
-      response.json(res);
-
-    } catch (err: any) {
-      next(err);
-    }
-
-  }
-);
-
-
-routerScore.post<{}, ICreateResponse, IScore>('',
-  async (request, response, next: NextFunction) => {
-
-    try {
-      const score = request.body.score;
-      const user_foreign_key = request.body.user_foreign_key
-      const session_foreign_key = request.body.session_foreign_key
-
-      // ATTENTION ! Et si les données dans user ne sont pas valables ?
-      // - colonnes qui n'existent pas ?
-      // - données pas en bon format ?
-
-      const db = DB.Connection;
-      const data = await db.query<OkPacket>("insert into SCORE set ?", [score, user_foreign_key, session_foreign_key]);
-
-      response.json({
-        id: data[0].insertId
-      });
-
-    } catch (err: any) {
-      next(err);
-    }
-
-  }
-);
-
-const routerScore_ = Router({ mergeParams: true });
-
-routerScore_.put<{}, IUpdateResponse, IScore>('',
+routerScoreTest.put<{}, IUpdateResponse, IScore>('',
   async (request, response, next: NextFunction) => {
     try {
       // ATTENTION ! Valider que le userId est valable ?
@@ -135,12 +131,18 @@ routerScore_.put<{}, IUpdateResponse, IScore>('',
   }
 );
 
+const routerScores = Router({ mergeParams: true });
+// routerScores.use(routerScore);
+
+export const ROUTES_SCORE_ADMIN = routerScores;
+
 
 /// Rassembler les 2 sous-routes 
-const routerScores = Router({ mergeParams: true });
-routerScores.use(routerScore);
-
-routerScores.use('/:user_foreign_key/:session_foreign_key', routerSingle);
+const routerScoreUser = Router({ mergeParams: true });
+routerScoreUser.use(routerScoreSingle);
+routerScoreUser.use('/:user_foreign_key/:session_foreign_key', routerScoreSingle);
 // routerScores.use('/:id_score', routerScore_);
 
-export const ROUTES_SCORE = routerScores;
+export const ROUTES_SCORE = routerScoreUser;
+
+export const ROUTES_SCORE_PUT = routerScoreTest;

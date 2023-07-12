@@ -81,12 +81,13 @@ router.get<{}, {}, {}, { jwt: string }>(
         table: 'USER',
         idKey: 'id_user',
         idValue: decoded.id_user,
-        columns: ['id_user', 'scope']
+        columns: ['id_user', 'scope', "id_promo"]
       });
 
       let payload: IAccessToken = {
         id_user: user.id_user,
-        scope: user.scope
+        scope: user.scope,
+        id_promo: user.id_promo
       };
 
       const access = await jwt.create(payload, {
