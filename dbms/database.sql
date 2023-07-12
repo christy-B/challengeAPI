@@ -92,3 +92,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+INSERT INTO USER nom_user, prenom_user, email_user, scope, promo_user
+VALUES ("flo", "rich", "florent.richard93@gmail.com", "admin", "none");

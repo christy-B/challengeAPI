@@ -9,6 +9,8 @@ import { ROUTES_QUESTION } from "./routes/Question";
 import { ROUTES_SCORE } from "./routes/IScore";
 import { ROUTES_INSTANCE } from "./routes/Instance";
 import { ROUTES_ACHALLENGE } from "./routes/ChallengeAdmin";
+import { controllerTests } from "./middleware/tests";
+import { controllerQuestionsTests } from "./routes/QuestionTests";
 
 // Récupérer le port des variables d'environnement ou préciser une valeur par défaut
 const PORT = process.env.PORT || 5050;
@@ -18,6 +20,11 @@ const app = Express();
 
 // L'appli parse le corps du message entrant comme du json
 app.use(json());
+
+app.use('/challenge/score', 
+  JWTAuthHandler("user"), 
+  controllerQuestionsTests,
+  controllerTests)
 
 // Accrocher les routes
 app.use('/challenge/auth', ROUTES_AUTH)
@@ -44,12 +51,15 @@ app.use('/challenge/question',
   JWTAuthHandler("user"),
   ROUTES_QUESTION)
 
+
 app.use('/challenge/score', 
-  JWTAuthHandler("user"),
+  JWTAuthHandler("user"), 
+  controllerQuestionsTests,
+  controllerTests,
   ROUTES_SCORE)
 
 app.use('/challenge/instance',
-JWTAuthHandler("user"),
+JWTAuthHandler("user"), 
   ROUTES_INSTANCE)
 // Ajouter un handler pour les erreurs
 app.use(DefaultErrorHandler);

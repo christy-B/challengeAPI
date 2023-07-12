@@ -77,16 +77,17 @@ routerScore.post<{}, ICreateResponse, IScore>('',
 
 const routerScore_ = Router({ mergeParams: true });
 
-routerScore_.put<{ id_score: string }, IUpdateResponse, IScore>('',
+routerScore_.put<{ id_score: string}, IUpdateResponse, IScore>('',
   async (request, response, next: NextFunction) => {
     try {
       // ATTENTION ! Valider que le userId est valable ?
       const scoreId = request.params.id_score;
+      const userId = request.body.user_foreign_key;
       const body = request.body;
 
       const db = DB.Connection;
       // Récupérer les lignes
-      const data = await db.query<OkPacket>(`update SCORE set ? where id_score = ?`, [body, scoreId]);
+      const data = await db.query<OkPacket>(`update SCORE set ? where id_score = ? and user_foreign_key = ?`, [body, scoreId, userId]);
 
       // Construire la réponse
       const res = {

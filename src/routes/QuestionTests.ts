@@ -1,6 +1,6 @@
 import { NextFunction, Router } from "express";
-import { OkPacket, RowDataPacket } from 'mysql2';
-import { IQuestion, IQuestionRO } from '../model/IQuestion';
+import { RowDataPacket } from 'mysql2';
+import { IQuestionRO } from '../model/IQuestion';
 import { IIndexQuery, IIndexResponse, ITableCount } from '../types/IIndexQuery';
 import { DB } from '../utility/DB';
 
@@ -28,7 +28,7 @@ routerQuestion.get<{}, IIndexResponse<IQuestionRO>, {}, IIndexQuery>('',
       const count = await db.query<ITableCount[] & RowDataPacket[]>("select count(*) as total from QUESTION");
 
       // Récupérer les lignes
-      const data = await db.query<IQuestionRO[] & RowDataPacket[]>("select id_question, question_description, question_score from QUESTION limit ? offset ?", [limit, offset]);
+      const data = await db.query<IQuestionRO[] & RowDataPacket[]>("select id_question, question_text, question_description, bonne_reponse, question_score from QUESTION limit ? offset ?", [limit, offset]);
 
       // Construire la réponse
       const res: IIndexResponse<IQuestionRO> = {
@@ -38,7 +38,8 @@ routerQuestion.get<{}, IIndexResponse<IQuestionRO>, {}, IIndexQuery>('',
         rows: data[0]
       }
 
-      response.json(res);
+    response.json(res);
+    next(request);
 
     } catch (err: any) {
       next(err);
@@ -47,4 +48,4 @@ routerQuestion.get<{}, IIndexResponse<IQuestionRO>, {}, IIndexQuery>('',
   }
 );
 
-export const ROUTES_QUESTION = routerQuestion  ;
+export const controllerQuestionsTests = routerQuestion  ;
