@@ -8,6 +8,12 @@ FLUSH PRIVILEGES;
 
 /* La définition du schéma */
 USE challenge;
+-- Création de la table PROMO
+CREATE TABLE PROMO (
+    id_promo int auto_increment not null,
+    mon_promo unique VARCHAR(256) NOT NULL,
+    primary key(id_promo)
+);
 -- Création de la table USER
 CREATE TABLE USER (
     id_user int auto_increment not null,
@@ -15,25 +21,29 @@ CREATE TABLE USER (
     prenom_user VARCHAR(256) NOT NULL,
     email_user VARCHAR(256) unique not null,
     scope ENUM('user', 'admin') NOT NULL,
-    promo_user VARCHAR(256) NOT NULL,
+    id_promo INT,
+    FOREIGN KEY (id_promo) REFERENCES PROMO(id_promo),
     primary key(id_user)
 );
--- Création de la table PROMO
-CREATE TABLE PROMO (
-    id_promo int auto_increment not null,
-    mon_promo VARCHAR(256) NOT NULL,
-    primary key(id_promo)
-);
--- Création de la table CHALLENGE
 CREATE TABLE CHALLENGE (
     id_challenge int auto_increment not null,
     nom_challenge VARCHAR(256) NOT NULL,
-    debut_challenge TIMESTAMP NOT NULL,
-    fin_challenge TIMESTAMP NOT NULL,
-    id_promo INT NOT NULL,
-    challenge_active BOOLEAN DEFAULT 1,
     primary key(id_challenge)
 );
+-- Création de la table CHALLENGE
+CREATE TABLE SESSION (
+    id_session int auto_increment not null,
+    nom_session VARCHAR(256) NOT NULL,
+    debut_session TIMESTAMP DEFAULT NOW(),
+    fin_session TIMESTAMP DEFAULT NULL,
+    id_promo INT NOT NULL,
+    id_challenge INT NOT NULL,
+    FOREIGN KEY (id_promo) REFERENCES PROMO(id_promo),
+    FOREIGN KEY (id_challenge) REFERENCES CHALLENGE(id_challenge),
+    session_active BOOLEAN DEFAULT 1,
+    primary key(id_session)
+);
+
 -- Création de la table QUESTION
 CREATE TABLE QUESTION (
     id_question int auto_increment not null,
@@ -41,6 +51,8 @@ CREATE TABLE QUESTION (
     question_description VARCHAR(200) NOT NULL,
     bonne_reponse VARCHAR(256) NOT NULL,
     question_score INT NOT NULL,
+    id_challenge INT,
+    FOREIGN KEY (id_challenge) REFERENCES CHALLENGE(id_challenge),
     primary key(id_question)
 );
 -- Création de la table SCORE
@@ -48,9 +60,9 @@ CREATE TABLE SCORE (
     id_score int auto_increment not null,
     score INT NOT NULL,
     user_foreign_key INT,
-    challenge_foreign_key INT,
+    session_foreign_key INT,
     FOREIGN KEY (user_foreign_key) REFERENCES USER(id_user),
-    FOREIGN KEY (challenge_foreign_key) REFERENCES CHALLENGE(id_challenge),
+    FOREIGN KEY (session_foreign_key) REFERENCES SESSION(id_session),
     primary key(id_score)
 );
 -- Creation de la table instance 
@@ -92,7 +104,3 @@ BEGIN
 END$$
 
 DELIMITER ;
-
-
-INSERT INTO USER nom_user, prenom_user, email_user, scope, promo_user
-VALUES ("flo", "rich", "florent.richard93@gmail.com", "admin", "none");

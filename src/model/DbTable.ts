@@ -1,7 +1,9 @@
 export type DbTable = 
-  'USER' |
   'PROMO' |
+  'USER' |
   'CHALLENGE' |
+  'TEST' |
   'QUESTION' |
-  'SCORE'
+  'SCORE' |
+  'INSTANCE'
 ;

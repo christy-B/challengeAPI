@@ -4,11 +4,11 @@ import { DefaultErrorHandler } from "./middleware/error-handler.middleware";
 import { ROUTES_AUTH } from "./routes/Auth";
 import { ROUTES_USER } from "./routes/User";
 import { ROUTES_PROMO } from "./routes/Promo";
-import { ROUTES_UCHALLENGE } from "./routes/Challenge";
+import { ROUTES_USER_SESSION } from "./routes/SessionUser";
 import { ROUTES_QUESTION } from "./routes/Question";
-import { ROUTES_SCORE } from "./routes/IScore";
+import { ROUTES_SCORE } from "./routes/Score";
 import { ROUTES_INSTANCE } from "./routes/Instance";
-import { ROUTES_ACHALLENGE } from "./routes/ChallengeAdmin";
+import { ROUTES_ADMIN_SESSION } from "./routes/SessionAdmin";
 import { controllerTests } from "./middleware/tests";
 import { controllerQuestionsTests } from "./routes/QuestionTests";
 
@@ -20,11 +20,6 @@ const app = Express();
 
 // L'appli parse le corps du message entrant comme du json
 app.use(json());
-
-app.use('/challenge/score', 
-  JWTAuthHandler("user"), 
-  controllerQuestionsTests,
-  controllerTests)
 
 // Accrocher les routes
 app.use('/challenge/auth', ROUTES_AUTH)
@@ -41,15 +36,15 @@ app.use('/challenge/promo',
 
 app.use('/challenge/challenge', 
 JWTAuthHandler("user"),
-ROUTES_UCHALLENGE)
+ROUTES_USER_SESSION)
 
 app.use('/challenge/admin/challenge', 
 JWTAuthHandler("admin"),
-ROUTES_ACHALLENGE)
+ROUTES_ADMIN_SESSION)
 
 app.use('/challenge/question', 
   JWTAuthHandler("user"),
-  ROUTES_QUESTION)
+ROUTES_QUESTION)
 
 
 app.use('/challenge/score', 
@@ -58,9 +53,9 @@ app.use('/challenge/score',
   controllerTests,
   ROUTES_SCORE)
 
-app.use('/challenge/instance',
-JWTAuthHandler("user"), 
-  ROUTES_INSTANCE)
+// app.use('/challenge/instance',
+// JWTAuthHandler("user"), 
+//   ROUTES_INSTANCE)
 // Ajouter un handler pour les erreurs
 app.use(DefaultErrorHandler);
 

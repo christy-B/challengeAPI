@@ -37,7 +37,7 @@ export class SshClient {
         return new Promise<stdOutResponse>((resolve, reject) => {
             this.conn.exec(stdIn, (err, stream) => {
                 if (err) reject(err);
-                let res:stdOutResponse;
+                let res:stdOutResponse = {code:0, response:""};
                 stream.on("close", (code:number) => {
                     res.code = code;
                     if(code !== 0) reject(res);

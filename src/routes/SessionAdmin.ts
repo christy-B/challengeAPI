@@ -1,6 +1,6 @@
 import { NextFunction, Router } from "express";
 import { OkPacket, RowDataPacket } from 'mysql2';
-import { IChallenge, IChallengeRO } from '../model/IChallenge';
+import { ISession, ISessionRO } from '../model/ISession';
 import { ICreateResponse } from '../types/ICreateResponse';
 import { IDeleteResponse } from "../types/IDeleteResponse";
 import { IIndexQuery, IIndexResponse, ITableCount } from '../types/IIndexQuery';
@@ -11,9 +11,9 @@ import { DB } from '../utility/DB';
 /// GET /
 /// POST /
 
-const routerAChallenge = Router({ mergeParams: true });
+const routAdminSession = Router({ mergeParams: true });
 
-routerAChallenge.get<{}, IIndexResponse<IChallengeRO>, {}, IIndexQuery>('/',
+routAdminSession.get<{}, IIndexResponse<ISessionRO>, {}, IIndexQuery>('/',
 
   async (request, response, next: NextFunction) => {
 
@@ -28,13 +28,13 @@ routerAChallenge.get<{}, IIndexResponse<IChallengeRO>, {}, IIndexQuery>('/',
       const offset = page * limit;
 
       // D'abord, récupérer le nombre total
-      const count = await db.query<ITableCount[] & RowDataPacket[]>("select count(*) as total from CHALLENGE");
+      const count = await db.query<ITableCount[] & RowDataPacket[]>("select count(*) as total from SESSION");
 
       // Récupérer les lignes
-      const data = await db.query<IChallengeRO[] & RowDataPacket[]>("select id_challenge, nom_challenge, debut_challenge, id_promo, challenge_active from CHALLENGE limit ? offset ?", [limit, offset]);
+      const data = await db.query<ISessionRO[] & RowDataPacket[]>("select id_session, nom_session, debut_session, id_promo, id_challenge, session_active from SESSION limit ? offset ?", [limit, offset]);
 
       // Construire la réponse
-      const res: IIndexResponse<IChallengeRO> = {
+      const res: IIndexResponse<ISessionRO> = {
         page,
         limit,
         total: count[0][0].total,
@@ -51,18 +51,18 @@ routerAChallenge.get<{}, IIndexResponse<IChallengeRO>, {}, IIndexQuery>('/',
 );
 
 
-routerAChallenge.post<{}, ICreateResponse, IChallenge>('',
+routAdminSession.post<{}, ICreateResponse, ISession>('',
   async (request, response, next: NextFunction) => {
 
     try {
-      const challenge = request.body;
+      const session = request.body;
 
       // ATTENTION ! Et si les données dans user ne sont pas valables ?
       // - colonnes qui n'existent pas ?
       // - données pas en bon format ?
 
       const db = DB.Connection;
-      const data = await db.query<OkPacket>("insert into CHALLENGE set ?", challenge);
+      const data = await db.query<OkPacket>("insert into SESSION set ?", session);
 
       response.json({
         id: data[0].insertId
@@ -75,21 +75,21 @@ routerAChallenge.post<{}, ICreateResponse, IChallenge>('',
   }
 );
 
-const routerAChallenge_ = Router({ mergeParams: true });
+const routAdminSession_ = Router({ mergeParams: true });
 
-routerAChallenge_.delete<{ id_challenge: string }, IDeleteResponse, {}>('',
+routAdminSession_.delete<{ id_session: string }, IDeleteResponse, {}>('',
   async (request, response, next: NextFunction) => {
     try {
-      
-      const challengeId = request.params.id_challenge;
+
+      const sessionId = request.params.id_session;
       const db = DB.Connection;
 
       // Récupérer les lignes
-      const data = await db.query<OkPacket>(`delete from CHALLENGE where id_challenge = ?`, [challengeId]);
+      const data = await db.query<OkPacket>(`delete from SESSION where id_session = ?`, [sessionId]);
 
       // Construire la réponse
       const res = {
-        id: challengeId,
+        id: sessionId,
         rows: data[0].affectedRows
       }
 
@@ -103,8 +103,8 @@ routerAChallenge_.delete<{ id_challenge: string }, IDeleteResponse, {}>('',
 
 
 /// Rassembler les 2 sous-routes 
-const routerAChallenges = Router({ mergeParams: true });
-routerAChallenges.use(routerAChallenge);
-routerAChallenges.use('/:id_challenge',routerAChallenge_);
+const routAdminSessions = Router({ mergeParams: true });
+routAdminSessions.use(routAdminSession);
+routAdminSessions.use('/:id_session', routAdminSession_);
 
-export const ROUTES_ACHALLENGE = routerAChallenges;
+export const ROUTES_ADMIN_SESSION = routAdminSessions;

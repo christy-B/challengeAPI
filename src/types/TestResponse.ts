@@ -6,3 +6,4 @@ export interface TestResponse {
     errorCode:number
     score:number
 }
+

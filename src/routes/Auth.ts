@@ -90,7 +90,7 @@ router.get<{}, {}, {}, { jwt: string }>(
       };
 
       const access = await jwt.create(payload, {
-        expiresIn: '5 minute',
+        expiresIn: '55555 minute',
         issuer: ISSUER,
         audience: ACCESS_AUD
       });

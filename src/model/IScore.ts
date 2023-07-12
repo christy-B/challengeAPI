@@ -6,8 +6,7 @@ export interface IScore {
   id_score: number;
   score: number;
   user_foreign_key: number;
-  challenge_foreign_key: number;
-
+  session_foreign_key: number;
 }
 
 // Outils de manipulation des types :

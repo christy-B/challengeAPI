@@ -22,19 +22,18 @@ const command2 = 'cat test.txt';
 
 const conn = new SshClient();
 
-export const controllerTests = (reqUser:Request, reqQuestions:Request, res:Response, next:NextFunction) => {
+export const controllerTests = (req:Request, res:Response, next:NextFunction) => {
     try {
-        const settings:ConnectConfig = reqUser.body.setttings;
-        const user:IUser = reqUser.body.user;
-        const questions: IQuestionRO[]= reqQuestions.body.data;
+        const settings:ConnectConfig = req.body.connectConfig;
+        const userId = req.body.user.id_user;
+        const questions: IQuestionRO[]= req.body.questions;
 
         const score = allTests(settings, questions);
 
         response.json({
+            id_score: score,
             score: score,
-            // RECUP ID SCORE
-            id_score: 1,
-            id_user: user.id_user
+            user_foreign_key: userId,
         })
 
     } catch (error) {
@@ -66,8 +65,10 @@ const doTest = async (question:IQuestion):Promise<TestResponse> => {
     const goodAnswer = question.bonne_reponse;
     const res = await conn.exec(command);
     let score = 0;
-    if(goodAnswer === res?.response) {
+    if(goodAnswer === (res?.response).replace("\n", "")) {
         score = question.question_score;
+    } else {
+        throw new Error("Not the right answer. Here is the output you gave "+ res.response)
     }
     return {
         stdIn:command,
@@ -77,13 +78,13 @@ const doTest = async (question:IQuestion):Promise<TestResponse> => {
     }
 }
 
-conn.connect(settings, async () => {
-    const test1 = await conn.exec(command);
-    console.log(test1);
+// conn.connect(settings, async () => {
+//     const test1 = await conn.exec(command);
+//     console.log(test1);
 
-    const test2 = await conn.exec(command2);
-    console.log(test2);
+//     const test2 = await conn.exec(command2);
+//     console.log(test2);
 
-}).catch((err:stdOutError) => {
-    console.log(err)
-})
+// }).catch((err:stdOutError) => {
+//     console.log(err)
+// })

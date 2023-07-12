@@ -31,7 +31,7 @@ routerIndex.get<{}, IIndexResponse<IUserRO>, {}, IIndexQuery>('/',
       const count = await db.query<ITableCount[] & RowDataPacket[]>("select count(*) as total from USER");
 
       // Récupérer les lignes
-      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, promo_user from USER limit ? offset ?", [limit, offset]);
+      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, id_promo from USER limit ? offset ?", [limit, offset]);
 
       // Construire la réponse
       const res: IIndexResponse<IUserRO> = {
@@ -93,7 +93,7 @@ routerSingle.get<{ id_user: string }, IUserRO, {}>('',
       const db = DB.Connection;
 
       // Récupérer les lignes
-      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, promo_user from USER where id_user = ?", [userId]);
+      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, id_promo from USER where id_user = ?", [userId]);
 
       // Construire la réponse
 
