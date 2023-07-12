@@ -29,7 +29,7 @@ router.get<{}, IRequestMagicLinkResponse, {}, IRequestMagicLink>(
         table: 'USER',
         idKey: 'email_user',
         idValue: email,
-        columns: ['id_user', 'email_user', 'scope']
+        columns: ['id_user', 'email_user', 'scope', "id_promo"]
       });
 
       // Create the new JWT
@@ -138,12 +138,13 @@ router.post<{}, { access: string }, { renew_token: string }, {}>(
         table: 'USER',
         idKey: 'id_user',
         idValue: decoded.id_user,
-        columns: ['id_user', 'scope']
+        columns: ['id_user', 'scope', "id_promo"]
       });
 
       let payload: IAccessToken = {
         id_user: user.id_user,
-        scope: user.scope
+        scope: user.scope,
+        id_promo: user.id_promo
       };
 
       const access = await jwt.create(payload, {
