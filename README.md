@@ -58,7 +58,7 @@ On utilise une architecture modulaire pour la base du code, avec des fichiers s�
 | **🔗 Dependences**    | 
 
 Dans ce projet, on utilise plusieurs dépendances externes. Parmi celles-ci, on a choisi d'utiliser:
-- `Typescript` pour.., 
+- `Typescript`, 
 - `Express.js` pour construire **notre serveur API, MySQL2** pour interagir avec notre base de données **MySQL**, 
 - `Dotenv` pour gérer nos variables d'environnement, et ``` Node Mailjet``` pour l'envoi des e-mails.
 
