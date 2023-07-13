@@ -8,8 +8,7 @@ export interface IUser {
   prenom_user?: string;
   email_user: string;
   scope: 'user'|'admin';
-  promo_user: string;
-
+  id_promo: number;
 }
 
 // Outils de manipulation des types :

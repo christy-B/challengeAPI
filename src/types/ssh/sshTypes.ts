@@ -6,7 +6,7 @@ export type shellCommand = string;
 /**
  * Object that contains the code and the output of stdOut.
  */
-export interface stdOutResponse {
+export type stdOutResponse = {
     code: number,
     response: string
 }

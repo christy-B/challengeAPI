@@ -3,8 +3,6 @@
 export interface IPromo {
     id_promo: number;
     mon_promo: string;
-  
-  
   }
   
   // Outils de manipulation des types :

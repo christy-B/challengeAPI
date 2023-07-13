@@ -1,6 +1,8 @@
 .env
+.ssh
 node_modules/
 build/
 ous/
 dbms/dbms-data/
 secrets
+src/validation.ts

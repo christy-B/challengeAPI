@@ -4,7 +4,8 @@ export interface IQuestion {
     question_description: string;
     bonne_reponse: string;
     challenge_active: boolean;
-    question_score: number
+    question_score: number;
+    id_challenge: number;
   }
   
   // Outils de manipulation des types :

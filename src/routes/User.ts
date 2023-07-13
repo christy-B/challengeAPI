@@ -31,7 +31,7 @@ routerIndex.get<{}, IIndexResponse<IUserRO>, {}, IIndexQuery>('/',
       const count = await db.query<ITableCount[] & RowDataPacket[]>("select count(*) as total from USER");
 
       // Récupérer les lignes
-      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, promo_user from USER limit ? offset ?", [limit, offset]);
+      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, id_promo from USER limit ? offset ?", [limit, offset]);
 
       // Construire la réponse
       const res: IIndexResponse<IUserRO> = {
@@ -55,6 +55,9 @@ routerIndex.post<{}, ICreateResponse, IUser>('',
   async (request, response, next: NextFunction) => {
 
     try {
+
+      
+
       const user = request.body;
 
       // ATTENTION ! Et si les données dans user ne sont pas valables ?
@@ -93,7 +96,7 @@ routerSingle.get<{ id_user: string }, IUserRO, {}>('',
       const db = DB.Connection;
 
       // Récupérer les lignes
-      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, promo_user from USER where id_user = ?", [userId]);
+      const data = await db.query<IUserRO[] & RowDataPacket[]>("select id_user, nom_user, prenom_user, email_user, scope, id_promo from USER where id_user = ?", [userId]);
 
       // Construire la réponse
 
@@ -110,7 +113,7 @@ routerSingle.get<{ id_user: string }, IUserRO, {}>('',
   }
 );
 
-routerSingle.put<{ id_user: string }, IUpdateResponse, IUser>('',
+routerIndex.put<{ id_user: string }, IUpdateResponse, IUser>('',
   async (request, response, next: NextFunction) => {
     try {
       // ATTENTION ! Valider que le userId est valable ?
@@ -135,7 +138,7 @@ routerSingle.put<{ id_user: string }, IUpdateResponse, IUser>('',
   }
 );
 
-routerSingle.delete<{ id_user: string }, IDeleteResponse, {}>('',
+routerIndex.delete<{ id_user: string }, IDeleteResponse, {}>('',
   async (request, response, next: NextFunction) => {
     try {
       // ATTENTION ! Valider que le userId est valable ?
@@ -165,4 +168,10 @@ const routerUser = Router({ mergeParams: true });
 routerUser.use(routerIndex);
 routerUser.use('/:id_user', routerSingle);
 
-export const ROUTES_USER = routerUser;
+export const ROUTES_USER_ADMIN = routerUser;
+
+const routerForUser = Router({ mergeParams: true });
+routerForUser.use(routerSingle);
+routerForUser.use('/:id_user', routerSingle);
+
+export const ROUTES_USER = routerForUser;

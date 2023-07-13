@@ -1,0 +1,617 @@
+{
+	"info": {
+		"_postman_id": "fc207920-1ab9-41a6-b46c-64888d284751",
+		"name": "Hetic_ChallengeAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25185218",
+		"_collection_link": "https://christteam.postman.co/workspace/My-Workspace~b34ec47b-b240-4e76-84e8-b5f4e7b027b1/collection/25185218-fc207920-1ab9-41a6-b46c-64888d284751?action=share&creator=25185218&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Promo",
+			"item": [
+				{
+					"name": "/promo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6InVzZXIiLCJpYXQiOjE2ODg5MDQwNjAsImV4cCI6MTY4ODkwNDM2MCwiYXVkIjoiYXBpLWFjY2VzcyIsImlzcyI6ImFwaS1hdXRoIn0.gjVo3cNT8VKuPJEG-tfGsbc4hjvR2mi2XYEgQR3oj0sPe3h7Ut82cgJ1ik41ILl8DnfrxreAcLQVmbQ7F8yI9H_VyqMn70AUpBYT2w7UoBxawhA-LOBLZh3iNcLuziTCVO3k0AN-FI1h2fKI-qhB5A6omGQROd5Gae8WCQ3flr-Im8Ma9kFyXZESO7-tjEt2wlGPnWSjHQ05M51qLWT77kXJRz9MLSJ0sEUuUIu-UUr6vgGNVnkaD6K2rHHcfDLeJUNZTHyWUKJqfBgQPcwR35CNrry7QLXUC1q6XAJuWyc8FXDddvIgwWXxiKRGrkaNgeLyQ41uCSYRdBtoxZrHbQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mon_promo\":\"MT4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/challenge/promo",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"promo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/promo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6InVzZXIiLCJpYXQiOjE2ODg5MDQwNjAsImV4cCI6MTY4ODkwNDM2MCwiYXVkIjoiYXBpLWFjY2VzcyIsImlzcyI6ImFwaS1hdXRoIn0.gjVo3cNT8VKuPJEG-tfGsbc4hjvR2mi2XYEgQR3oj0sPe3h7Ut82cgJ1ik41ILl8DnfrxreAcLQVmbQ7F8yI9H_VyqMn70AUpBYT2w7UoBxawhA-LOBLZh3iNcLuziTCVO3k0AN-FI1h2fKI-qhB5A6omGQROd5Gae8WCQ3flr-Im8Ma9kFyXZESO7-tjEt2wlGPnWSjHQ05M51qLWT77kXJRz9MLSJ0sEUuUIu-UUr6vgGNVnkaD6K2rHHcfDLeJUNZTHyWUKJqfBgQPcwR35CNrry7QLXUC1q6XAJuWyc8FXDddvIgwWXxiKRGrkaNgeLyQ41uCSYRdBtoxZrHbQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/promo",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"promo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Challenge",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "challenge",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/challenge/challenge",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"challenge",
+										"challenge"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "challenge",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"nom_challenge\":\"linux\",\r\n    \"debut_challenge\":\"2023-02-10 00:00:00\",\r\n    \"id_promo\": \"1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/challenge/challenge",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"challenge",
+										"challenge"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "challenge",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/challenge/challenge/1",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"challenge",
+										"challenge",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "challenge",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/challenge/challenge",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"challenge",
+										"challenge"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "challenge",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/challenge/challenge",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"challenge",
+										"challenge"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Question",
+			"item": [
+				{
+					"name": "question",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/question/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"question",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "/auth/magic",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/auth/magic?email=elluxebf@gmail.com",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"auth",
+								"magic"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "elluxebf@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/auth/login?jwt=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJpYXQiOjE2ODg4MjkzMzMsImV4cCI6MTY4ODgzMTEzMywiYXVkIjoiYXBpLW1hZ2ljIiwiaXNzIjoiYXBpLWF1dGgifQ.VQ0z6hSsSmpH5HTxwpBIJdaVJevj6DKQwSsDlnfDqObGCmVqAHduChyCLsTsV1sOIqgikIUu7iE-H0lfWUWkBznImiFelYnls-d1b37ewmBmnJHyDzJ0Pw-EZkqa2mpX0BFGSvSu-f3lMWLBiHLWWc15-4klTCH-EydvqqaIbaaA2RDQjXvPf4y2579O8VCF06x_O12JQOgKBuKHBGjIXv-PV4z65kAPpWGifv3hKnygmj2gWoVTh390M0LAh6YUaeoIFMwjVo-xACgr7AH3NTJc2G-mRMPNfn49B2Jl9XG6ezwCPj_NGfiCy9-3chryUZl2KM_NCeFBlDxSOGOOnA",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJpYXQiOjE2ODg4MjkzMzMsImV4cCI6MTY4ODgzMTEzMywiYXVkIjoiYXBpLW1hZ2ljIiwiaXNzIjoiYXBpLWF1dGgifQ.VQ0z6hSsSmpH5HTxwpBIJdaVJevj6DKQwSsDlnfDqObGCmVqAHduChyCLsTsV1sOIqgikIUu7iE-H0lfWUWkBznImiFelYnls-d1b37ewmBmnJHyDzJ0Pw-EZkqa2mpX0BFGSvSu-f3lMWLBiHLWWc15-4klTCH-EydvqqaIbaaA2RDQjXvPf4y2579O8VCF06x_O12JQOgKBuKHBGjIXv-PV4z65kAPpWGifv3hKnygmj2gWoVTh390M0LAh6YUaeoIFMwjVo-xACgr7AH3NTJc2G-mRMPNfn49B2Jl9XG6ezwCPj_NGfiCy9-3chryUZl2KM_NCeFBlDxSOGOOnA"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/renew",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"renew_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6ImFkbWluIiwiaWF0IjoxNjg4ODMwODU2LCJleHAiOjE2ODg4MzI2NTYsImF1ZCI6ImFwaS1yZW5ldyIsImlzcyI6ImFwaS1hdXRoIn0.EXyjT5PckDMk6jm338Vtk1DEQrXO7EPXDsA7z-zQ35NQ0eEt3_N_RhfVABcsxv3oqbEhdjxDdDv8j3R7rV5IRf12aSbZyKKPIyFX_URQz3dyfRPiuB0ucREyjiCrK8toka5jxiNU2RXB2fxMdTSX9FuFCXr2731KxsYHvL5mRW30s25cy3TBai-eCiK9nXgjM9TGS1hB57e-YQ-ajsSlj7udlxdav8k7jI57NjuLkkCRgBO0_j_d42weKPABVXdCEWeTw5EnnyDTa1sRTH2Ldt67kbYUDWO4ezznwy5--0BTnAZoEeeoaRu6tZL_-cVHHiLHb9Yac6DER1CfW9BNHQ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/challenge/auth/renew",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"auth",
+								"renew"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "/user/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoxLCJzY29wZSI6ImFkbWluIiwiaWF0IjoxNjg4OTAzNzIyLCJleHAiOjE2ODg5MDQwMjIsImF1ZCI6ImFwaS1hY2Nlc3MiLCJpc3MiOiJhcGktYXV0aCJ9.acr8Rp8FF0xxLjPwp1TqchpL-hAz0WixVMqEiO3plp-Ra9iy4Rel73BKAm1bfAbCdlUvVDI9ydtjYY0YvE3kYEpbN5JlecXWLsvHgH_aneiWk1X_ybqmlYgdVtxMPGBB_xnh-DRidJ6gGHLY2Re6eW52pv7PLK_XEK7FKhVFnVYRoBqgYdILo_zbt2gyEMZ9klzL1EBiYrOXthj6FmmdRkwUfwBqmsoFSF6BGmvcMm1rIfJJW7HXLS_-24wB5VSVjIWFbmGKzEL1XNvlVxh5NaQZrZQ5DOUf0NSDdXYLo98IbeknMcjEZpNBfb_zP6f9cKznS_U_dyQE3Y_VKPVv_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"email_user\": \"elluxebf@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/challenge/user/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:userId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/user/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6InVzZXIiLCJpYXQiOjE2ODg5MDQwNjAsImV4cCI6MTY4ODkwNDM2MCwiYXVkIjoiYXBpLWFjY2VzcyIsImlzcyI6ImFwaS1hdXRoIn0.gjVo3cNT8VKuPJEG-tfGsbc4hjvR2mi2XYEgQR3oj0sPe3h7Ut82cgJ1ik41ILl8DnfrxreAcLQVmbQ7F8yI9H_VyqMn70AUpBYT2w7UoBxawhA-LOBLZh3iNcLuziTCVO3k0AN-FI1h2fKI-qhB5A6omGQROd5Gae8WCQ3flr-Im8Ma9kFyXZESO7-tjEt2wlGPnWSjHQ05M51qLWT77kXJRz9MLSJ0sEUuUIu-UUr6vgGNVnkaD6K2rHHcfDLeJUNZTHyWUKJqfBgQPcwR35CNrry7QLXUC1q6XAJuWyc8FXDddvIgwWXxiKRGrkaNgeLyQ41uCSYRdBtoxZrHbQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/:userId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6ImFkbWluIiwiaWF0IjoxNjg4ODA5MDU3LCJleHAiOjE2ODg4NTIyNTcsImF1ZCI6ImFwaS1hY2Nlc3MiLCJpc3MiOiJhcGktYXV0aCJ9.fHWwWuvVbzqhfG2dodrMm00XUg363pH8kHvGrAm0SCR7Fpk7d62J8D8NW-37EIXuHx8XOevCYHrAVWn3arMm4yF8IApkgqQ8dtzFU8HfxXUdvrCRdNAUUfBAx_xAGNkaohJyOlSghikMn-u5L1sJVqQBXQJ3jpej2OXO-rOhQX4peqVmYi3shpgXxDHy1BQC_E8Dwfz_cSQPkgn_8b9XArVcVbpOji0L0PPifC65NMXYPkvkjmrb9h3_WHKGCgDw-3IAKCMjMI-MUm2_4fl7_LdVT2kxtzm7MZvc3ZiPqT2XR_YoFh1iBxHAydQy64Pst9xoS5tADpxCJZovUuDG7Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/user/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6InVzZXIiLCJpYXQiOjE2ODg5MDQwNjAsImV4cCI6MTY4ODkwNDM2MCwiYXVkIjoiYXBpLWFjY2VzcyIsImlzcyI6ImFwaS1hdXRoIn0.gjVo3cNT8VKuPJEG-tfGsbc4hjvR2mi2XYEgQR3oj0sPe3h7Ut82cgJ1ik41ILl8DnfrxreAcLQVmbQ7F8yI9H_VyqMn70AUpBYT2w7UoBxawhA-LOBLZh3iNcLuziTCVO3k0AN-FI1h2fKI-qhB5A6omGQROd5Gae8WCQ3flr-Im8Ma9kFyXZESO7-tjEt2wlGPnWSjHQ05M51qLWT77kXJRz9MLSJ0sEUuUIu-UUr6vgGNVnkaD6K2rHHcfDLeJUNZTHyWUKJqfBgQPcwR35CNrry7QLXUC1q6XAJuWyc8FXDddvIgwWXxiKRGrkaNgeLyQ41uCSYRdBtoxZrHbQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"prenom_user\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/challenge/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Score",
+			"item": [
+				{
+					"name": "score",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjoyLCJzY29wZSI6InVzZXIiLCJpYXQiOjE2ODkwMTMxODcsImV4cCI6MTY4OTAxMzQ4NywiYXVkIjoiYXBpLWFjY2VzcyIsImlzcyI6ImFwaS1hdXRoIn0.F5Mj-ZUrUcdXw-iFORyDjo34SA19vksOpNBNK9joEKEMMCrt8IVCvmWzFtZ1DOOSBlP1rJkOZDXC9diwGOXRR2P7A9hOnWPyRbwul-Y_KMbLZks4YSvJlLPob5qt02WR_ZghJoK7pdX08-y3EADYAreKUWLRtXTTACzVkdx4y-FdCo-DQBhHxCOjeN8Jrb8u8rsk-gwZ56dnyNc3LAMQkxVes4T9-iPeGswVbywLYFv9VJOq3Y9QgTEMxJbPekILYr2Sm681TqYzRnpg6yywt_rWydW1hDgIGATcslKk5UXu85yvq7XYD-WPDtwo_kzwxrPoDv5f71qX8gtONWoOaQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/score/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"score",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "score",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_score\": 2,\r\n    \"connectConfig\": {\r\n        \"host\":\"51.91.143.149\",\r\n        \"port\":22,\r\n        \"username\": \"ubuntu\",\r\n        \"password\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/challenge/score/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"score",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "score",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"score\": 17,\r\n    \"id_score\": 2,\r\n    \"challenge_foreign_key\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/challenge/score/4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"score",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Instance",
+			"item": [
+				{
+					"name": "instance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/instance",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"instance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "instance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/challenge/instance",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"challenge",
+								"instance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:5050",
+			"type": "string"
+		}
+	]
+}

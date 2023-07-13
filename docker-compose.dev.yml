@@ -32,16 +32,16 @@ services:
     networks:
       - challenge-network
 
-  proxy:
-    image: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    restart: always
-    volumes:
-      - ./nginx/api-dev.nginx.conf:/etc/nginx/conf.d/api.nginx.conf
-    networks:
-      - challenge-network
+  # proxy:
+  #   image: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   restart: always
+  #   volumes:
+  #     - ./nginx/api-dev.nginx.conf:/etc/nginx/conf.d/api.nginx.conf
+  #   networks:
+  #     - challenge-network
 
 networks:
   challenge-network:

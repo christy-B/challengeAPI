@@ -16,9 +16,11 @@ export class SshClient {
         return new Promise<void>((resolve, reject) => {
             this.conn
                 .on("error", (err:Error)=> {
+                    console.log(err)
                     reject(err.message);
                 })
                 .on("ready", () => {
+                    console.log("ssh ready")
                     instructions()
                 .then(() => {
                     resolve();
@@ -36,8 +38,9 @@ export class SshClient {
     exec(stdIn: shellCommand) {
         return new Promise<stdOutResponse>((resolve, reject) => {
             this.conn.exec(stdIn, (err, stream) => {
+                console.log(err)
                 if (err) reject(err);
-                let res:stdOutResponse;
+                let res:stdOutResponse = {code:0, response:""};
                 stream.on("close", (code:number) => {
                     res.code = code;
                     if(code !== 0) reject(res);
