@@ -62,7 +62,7 @@ routAdminSession.post<{}, ICreateResponse, ISession>('',
       // - données pas en bon format ?
 
       const db = DB.Connection;
-      const data = await db.query<OkPacket>("insert into SESSION set ?", session);
+      const data = await db.query<OkPacket>("insert into SESSION set ?", [session]);
 
       response.json({
         id: data[0].insertId

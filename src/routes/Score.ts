@@ -4,27 +4,37 @@ import { ICreateResponse } from '../types/ICreateResponse';
 import { DB } from '../utility/DB';
 import { IScore, IScoreRO } from "../model/IScore";
 import { IIndexQuery, IIndexResponse, ITableCount } from '../types/IIndexQuery';
-import { ISessionRO } from "../model/ISession";
 import { IUpdateResponse } from "../types/IUpdateResponse";
+import { ISession } from "../model/ISession";
 
 
 const routerScoreSingle = Router({ mergeParams: true });
 
-routerScoreSingle.get<{ user_foreign_key: string , session_foreign_key: string}, IScoreRO, {}>('',
+routerScoreSingle.get<{ user_foreign_key: string , id_promo: string}, IScoreRO, {}>('',
   async (request, response, next: NextFunction) => {
 
     try {
       const userId = request.params.user_foreign_key;
-      const sessionId = request.params.session_foreign_key;
+      const promoId = request.params.id_promo;
 
       // ATTENTION ! Valider que le userId est valable ?
 
       const db = DB.Connection;
 
+      const dataSession = await db.query<ISession[] & RowDataPacket[]>('select id_session from `SESSION` where id_promo = ? order by debut_session desc limit 1', [promoId])
+
+      const idSession = dataSession[0][0].id_session;
+
+      // console.log("session")
+      // console.log(dataSession)
+
       // Récupérer les lignes
-      const data = await db.query<IScore[] & RowDataPacket[]>("select id_score, score, user_foreign_key, session_foreign_key from SCORE where user_foreign_key = ? and session_foreign_key = ?", [userId, sessionId]);
+      const data = await db.query<IScore[] & RowDataPacket[]>("select id_score, score, user_foreign_key, session_foreign_key from SCORE where session_foreign_key = ? and user_foreign_key = ?", [idSession, userId]);
 
       // Construire la réponse
+
+      // console.log("score")
+      // console.log(data)
 
       // ATTENTION ! Que faire si le nombre de lignes est zéro ?
 
@@ -44,7 +54,7 @@ routerScoreSingle.post<{}, ICreateResponse, IScore>('',
   async (request, response, next: NextFunction) => {
 
     try {
-      const score = request.body.score;
+      const score = 0;
       const user_foreign_key = request.body.user_foreign_key
       const session_foreign_key = request.body.session_foreign_key
 
@@ -53,7 +63,7 @@ routerScoreSingle.post<{}, ICreateResponse, IScore>('',
       // - données pas en bon format ?
 
       const db = DB.Connection;
-      const data = await db.query<OkPacket>("insert into SCORE set ?", [score, user_foreign_key, session_foreign_key]);
+      const data = await db.query<OkPacket>("insert into SCORE (score, user_foreign_key, session_foreign_key) values ( ?, ?, ?)", [score, user_foreign_key, session_foreign_key]);
 
       response.json({
         id: data[0].insertId
@@ -68,27 +78,29 @@ routerScoreSingle.post<{}, ICreateResponse, IScore>('',
 
 const routerScore = Router({ mergeParams: true });
 
-routerScore.get<{}, IIndexResponse<ISessionRO>, {}, IIndexQuery>('/',
+routerScore.get<{ session_foreign_key: string }, IIndexResponse<IScoreRO>, {}, IIndexQuery>('',
   async (request, response, next: NextFunction) => {
 
     try {
+
+      const sessionId = request.params.session_foreign_key;
 
       const db = DB.Connection;
 
       // On suppose que le params query sont en format string, et potentiellement
       // non-numérique, ou corrompu
       const page = parseInt(request.query.page || "0") || 0;
-      const limit = parseInt(request.query.limit || "10") || 0;
+      const limit = parseInt(request.query.limit || "100") || 0;
       const offset = page * limit;
 
       // D'abord, récupérer le nombre total
       const count = await db.query<ITableCount[] & RowDataPacket[]>("select count(*) as total from SCORE");
 
       // Récupérer les lignes
-      const data = await db.query<ISessionRO[] & RowDataPacket[]>("select id_score, score,user_foreign_key, session_foreign_key from SCORE limit ? offset ?", [limit, offset]);
+      const data = await db.query<IScoreRO[] & RowDataPacket[]>("select id_score, score, user_foreign_key, session_foreign_key from SCORE where session_foreign_key = ? limit ? offset ?", [sessionId, limit, offset]);
 
       // Construire la réponse
-      const res: IIndexResponse<ISessionRO> = {
+      const res: IIndexResponse<IScoreRO> = {
         page,
         limit,
         total: count[0][0].total,
@@ -132,7 +144,8 @@ routerScoreTest.put<{}, IUpdateResponse, IScore>('',
 );
 
 const routerScores = Router({ mergeParams: true });
-// routerScores.use(routerScore);
+routerScores.use(routerScore);
+routerScores.use('/:session_foreign_key', routerScore);
 
 export const ROUTES_SCORE_ADMIN = routerScores;
 
@@ -140,7 +153,7 @@ export const ROUTES_SCORE_ADMIN = routerScores;
 /// Rassembler les 2 sous-routes 
 const routerScoreUser = Router({ mergeParams: true });
 routerScoreUser.use(routerScoreSingle);
-routerScoreUser.use('/:user_foreign_key/:session_foreign_key', routerScoreSingle);
+routerScoreUser.use('/:user_foreign_key/:id_promo', routerScoreSingle);
 // routerScores.use('/:id_score', routerScore_);
 
 export const ROUTES_SCORE = routerScoreUser;

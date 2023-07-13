@@ -37,7 +37,7 @@ CREATE TABLE SESSION (
     debut_session TIMESTAMP DEFAULT NOW(),
     fin_session TIMESTAMP DEFAULT NULL,
     id_promo INT NOT NULL,
-    id_challenge INT NOT NULL,
+    id_challenge INT DEFAULT 1 NOT NULL,
     FOREIGN KEY (id_promo) REFERENCES PROMO(id_promo),
     FOREIGN KEY (id_challenge) REFERENCES CHALLENGE(id_challenge),
     session_active BOOLEAN DEFAULT 1,
@@ -102,5 +102,26 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'IP address must be between 7 and 15 characters long';
     END IF;
 END$$
+
+DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER before_insert_score
+BEFORE INSERT ON SCORE
+FOR EACH ROW
+BEGIN
+    DECLARE score_count INT;
+    
+    SELECT COUNT(*) INTO score_count
+    FROM SCORE
+    WHERE user_foreign_key = NEW.user_foreign_key
+    AND session_foreign_key = NEW.session_foreign_key;
+    
+    IF score_count > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Score for this user and session already created. Duplicate score for user and session.';
+    END IF;
+END //
 
 DELIMITER ;

@@ -26,11 +26,13 @@ app.use('/challenge/auth', ROUTES_AUTH)
 
 // USER
 
+//check
 app.use('/challenge/admin/user',
   JWTAuthHandler("admin"),  
   ROUTES_USER_ADMIN
 );
 
+//check
 app.use('/challenge/user',
   JWTAuthHandler("user"),  
   ROUTES_USER
@@ -38,37 +40,44 @@ app.use('/challenge/user',
 
 // PROMO
 
+//check
 app.use('/challenge/promo',
   JWTAuthHandler("admin"),
   ROUTES_PROMO)
 
-//CHALLENGE
+//CHALLENGE - session
 
-app.use('/challenge/challenge', 
+//check
+app.use('/challenge/user/session', 
 JWTAuthHandler("user"),
 ROUTES_USER_SESSION)
 
-app.use('/challenge/admin/challenge', 
+//check
+app.use('/challenge/admin/session', 
 JWTAuthHandler("admin"),
 ROUTES_ADMIN_SESSION)
 
 // QUESTIONS
 
-app.use('/challenge/question', 
+//check
+app.use('/challenge/questions', 
   JWTAuthHandler("user"),
 ROUTES_QUESTION)
 
 // SCORE
 
+//check
 app.use('/challenge/score', 
   JWTAuthHandler("user"), 
   ROUTES_SCORE)
 
-app.use('/challenge/admin/score', 
+//check
+app.use('/challenge/admin/session/score', 
   JWTAuthHandler("admin"), 
 ROUTES_SCORE_ADMIN)
 
-app.use('/challenge/score/put', 
+//check
+app.use('/challenge/score/test/:id_score', 
   JWTAuthHandler("user"), 
   controllerQuestionsTests,
   controllerTests,

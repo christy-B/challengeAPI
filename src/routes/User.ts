@@ -110,7 +110,7 @@ routerSingle.get<{ id_user: string }, IUserRO, {}>('',
   }
 );
 
-routerSingle.put<{ id_user: string }, IUpdateResponse, IUser>('',
+routerIndex.put<{ id_user: string }, IUpdateResponse, IUser>('',
   async (request, response, next: NextFunction) => {
     try {
       // ATTENTION ! Valider que le userId est valable ?
@@ -135,7 +135,7 @@ routerSingle.put<{ id_user: string }, IUpdateResponse, IUser>('',
   }
 );
 
-routerSingle.delete<{ id_user: string }, IDeleteResponse, {}>('',
+routerIndex.delete<{ id_user: string }, IDeleteResponse, {}>('',
   async (request, response, next: NextFunction) => {
     try {
       // ATTENTION ! Valider que le userId est valable ?
@@ -168,7 +168,7 @@ routerUser.use('/:id_user', routerSingle);
 export const ROUTES_USER_ADMIN = routerUser;
 
 const routerForUser = Router({ mergeParams: true });
-routerUser.use(routerIndex);
-routerUser.use('/:id_user', routerSingle);
+routerForUser.use(routerSingle);
+routerForUser.use('/:id_user', routerSingle);
 
 export const ROUTES_USER = routerForUser;

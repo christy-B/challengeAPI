@@ -6,13 +6,12 @@ import { IQuestion } from "../model/IQuestion";
 import { shellCommand } from "../types/ssh/sshTypes";
 import { Response, Request, NextFunction, response } from "express";
 import { TestResponse } from "../types/TestResponse";
-import { IUser } from "../model/IUser";
-import { IQuestionRO } from "../model/IQuestion";
+import { IScore } from "../model/IScore";
 
-const settings:ConnectConfig = {
-    host: '51.91.143.149',
+let settings:ConnectConfig = {
+    host: '',
     port: 22,
-    username: 'ubuntu',
+    username: '',
     password: "",
     privateKey: readFileSync("/root/.ssh/id_rsa")
 }
@@ -22,19 +21,27 @@ const command2 = 'cat test.txt';
 
 const conn = new SshClient();
 
-export const controllerTests = (req:Request, res:Response, next:NextFunction) => {
+export const controllerTests = async (req:Request, res:Response, next:NextFunction) => {
     try {
-        const settings:ConnectConfig = req.body.connectConfig;
+        console.log("I am in")
+        settings = req.body.connectConfig;
         const userId = req.body.user.id_user;
-        const questions: IQuestionRO[]= req.body.questions;
+        const scoreId = req.body.id_score;
+        const questions = req.body.questions;
 
-        const score = allTests(settings, questions);
+        const score = await allTests(settings, questions).catch((err) => {
+            throw err;
+        });
 
-        response.json({
-            id_score: score,
+        const res:IScore = {
+            id_score: scoreId,
             score: score,
             user_foreign_key: userId,
-        })
+        }
+
+        req.body = res;
+
+        next();
 
     } catch (error) {
         next(error)
@@ -47,15 +54,23 @@ const allTests = async (settings:ConnectConfig, questions:IQuestion[])=> {
 
     let score = 0;
 
-    for (const question of questions) {
-        const test = await doTest(question);
+    conn.connect(settings, async () => {
+        
+        for (const question of questions) {
+            const test = await doTest(question).catch((err) => {
+                throw err;
+            });
 
-        if (test.errorCode !== 0) {
-            throw new Error(JSON.stringify(test));
-        } else {
-            score += test.score;
-        }
-    }
+            if (test.errorCode !== 0) {
+                throw new Error(JSON.stringify(test));
+            } else {
+                score += test.score;
+            }
+        }        
+    
+    }).catch((err:stdOutError) => {
+        throw(err)
+    })
 
     return score
 }
@@ -63,7 +78,9 @@ const allTests = async (settings:ConnectConfig, questions:IQuestion[])=> {
 const doTest = async (question:IQuestion):Promise<TestResponse> => {
     const command:shellCommand = question.question_text;
     const goodAnswer = question.bonne_reponse;
-    const res = await conn.exec(command);
+    const res = await conn.exec(command).catch((err) => {
+        throw err;
+    });
     let score = 0;
     if(goodAnswer === (res?.response).replace("\n", "")) {
         score = question.question_score;

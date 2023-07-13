@@ -11,7 +11,7 @@ import { DB } from '../utility/DB';
 
 const routerUserSession = Router({ mergeParams: true });
 
-routerUserSession.get<{ id_promo: string }, ISessionRO, {} >('/',
+routerUserSession.get<{ id_promo: string }, ISessionRO, {} >('/:id_promo',
 
   async (request, response, next: NextFunction) => {
 

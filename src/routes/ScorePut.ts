@@ -11,11 +11,11 @@ routerScoreTest.put<{}, IUpdateResponse, IScore>('',
     try {
       // ATTENTION ! Valider que le userId est valable ?
       const scoreId = request.body.id_score;
-      const id_score = request.body.id_score
+      const score = request.body.score
 
       const db = DB.Connection;
       // Récupérer les lignes
-      const data = await db.query<OkPacket>(`update SCORE set score = ? where id_score = ? `, [scoreId, id_score]);
+      const data = await db.query<OkPacket>(`update SCORE set score = ? where id_score = ? `, [score, scoreId]);
 
       // Construire la réponse
       const res = {

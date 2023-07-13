@@ -4,11 +4,13 @@ import { ErrorCode } from '../utility/Error/ErrorCode';
 
 export const DefaultErrorHandler = async (error: any, req: Request, res: Response, next: NextFunction) => {
 
+  console.log("error")
   console.log(error);
   console.log(error.constructor.name);
 
   let err = new ApiError(ErrorCode.InternalError, 'internal/unknown', 'An unknown internal error occurred');
-    
+
+
   if (!!error) {
     if (error instanceof ApiError) {
       err = error;
