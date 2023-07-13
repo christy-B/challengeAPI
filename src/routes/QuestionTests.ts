@@ -49,7 +49,6 @@ const noRouter = async (request:Request, response:Response, next: NextFunction) 
     const data = await db.query<IQuestionRO[] & RowDataPacket[]>("select id_question, question_text, question_description, bonne_reponse, question_score from QUESTION");
 
     // Construire la réponse
-    console.log("ha");
 
     const res:ScoreTest = {
       connectConfig:request.body.connectConfig,

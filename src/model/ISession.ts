@@ -8,6 +8,13 @@ export interface ISession {
     id_challenge: number;
     session_active: boolean;
   }
+
+export interface ISessionPost {
+  nom_session: string;
+  debut_session: Date;
+  id_promo: number;
+  id_challenge: number;
+}
   
   // Outils de manipulation des types :
   // https://www.typescriptlang.org/docs/handbook/utility-types.html

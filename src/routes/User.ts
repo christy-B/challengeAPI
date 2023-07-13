@@ -55,6 +55,9 @@ routerIndex.post<{}, ICreateResponse, IUser>('',
   async (request, response, next: NextFunction) => {
 
     try {
+
+      
+
       const user = request.body;
 
       // ATTENTION ! Et si les données dans user ne sont pas valables ?

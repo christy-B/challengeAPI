@@ -5,3 +5,4 @@ build/
 ous/
 dbms/dbms-data/
 secrets
+src/validation.ts
